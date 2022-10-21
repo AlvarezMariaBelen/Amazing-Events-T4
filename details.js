@@ -1,9 +1,9 @@
 let contenedorDet = document.getElementById("detail");
-let dataEvents = events;
+let dataEvents = data.events;
 
 const id = location.search;
-const parametro = new URLSearchParams(id);
-const numberId = parseInt(parametro.get("id"));
+const parametro = new URLSearchParams(id); //url search params sirve para recuperar parametros de busqueda, id es la query string
+const numberId = parseInt(parametro.get("id")); //parseInt convierte un string y devuelve un entero
 
 const evento = dataEvents.find((spot) => spot._id === numberId);
 
