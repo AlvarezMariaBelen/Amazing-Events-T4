@@ -13,10 +13,14 @@ function printCard(array) {
       locationCards += ` 
        <div class="cards">
             <img src="${data.image}" />
+         <div class="upcard">  
             <h2>${data.name}</h2>
             <p>${data.description}</p>
+         </div> 
+         <div class="lowcard">
             <p class="price">Price: ${data.price}</p>
             <a href="details.html?id=${data._id}"><button>More details</button></a>
+         </div>   
         </div>
         `;
       cardStorer.innerHTML = locationCards;
@@ -40,7 +44,6 @@ function printChecks() {
   checkStorer.innerHTML = cheksLocation;
 }
 printChecks();
-
 
 let checkboxBranded = [];
 let textSearch = "";
