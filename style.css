@@ -94,6 +94,17 @@ nav a:hover {
 .price {
     font-weight: bold;
 }
+.lowcard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.upcard {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    padding-top: 5px;
+}
 img {
     width: 194px;
     height: 130px;
