@@ -11,13 +11,17 @@ function printCard(array) {
   if (array.length !== 0) {
     array.forEach((data) => {
       locationCards += ` 
-         <div class="cards">
-              <img src="${data.image}" />
-              <h2>${data.name}</h2>
-              <p>${data.description}</p>
-              <p class="price">Price: ${data.price}</p>
-              <a href="details.html?id=${data._id}"><button>More details</button></a>
-          </div>
+      <div class="cards">
+      <img src="${data.image}" />
+   <div class="upcard">  
+      <h2>${data.name}</h2>
+      <p>${data.description}</p>
+   </div> 
+   <div class="lowcard">
+      <p class="price">Price: ${data.price}</p>
+      <a href="details.html?id=${data._id}"><button>More details</button></a>
+   </div>   
+  </div>
           `;
       cardStorer.innerHTML = locationCards;
     });
