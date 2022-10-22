@@ -1,60 +1,103 @@
-let currentDate = data.currentDate;
-let contenedor = document.getElementById("container");
-let buscar = document.getElementById("searchInput");
+const pastEvents = data.events.filter((event) => event.date < data.currentDate);
+let cardStorer = document.getElementById("container");
+let checkStorer = document.getElementById("check");
+let checks = pastEvents.map((event) => event.category);
+let filterrepeat = new Set(checks);
+let categorysCheck = [...filterrepeat];
 
-const pastEvents = data.events.filter((event) => event.date < currentDate);
-
-function añadirCard(array) {
-  contenedor.innerHTML += `
-       <div class="cards">
-            <img src="${array.image}" />
-            <h2>${array.name}</h2>
-            <p>${array.description}</p>
-            <p class="price">Price: ${array.price}</p>
-            <a href="details.html?id=${array._id}"><button>More details</button></a>
-        </div>
-        `;
+//creo las cards dinamicas
+function printCard(array) {
+  let locationCards = " ";
+  if (array.length !== 0) {
+    array.forEach((data) => {
+      locationCards += ` 
+         <div class="cards">
+              <img src="${data.image}" />
+              <h2>${data.name}</h2>
+              <p>${data.description}</p>
+              <p class="price">Price: ${data.price}</p>
+              <a href="details.html?id=${data._id}"><button>More details</button></a>
+          </div>
+          `;
+      cardStorer.innerHTML = locationCards;
+    });
+  } else {
+    cardStorer.innerHTML = `
+      <div>
+        <p class="card-text">No results found!</p>
+      </div>
+    `;
+  }
 }
-pastEvents.forEach(añadirCard);
+printCard(pastEvents);
 
-//filtro el buscador
-buscar.addEventListener("input", (event) => {
-  contenedor.innerHTML = "";
-  let filtro = pastEvents.filter((elemento) =>
-    elemento.name.toLowerCase().includes(event.target.value.toLowerCase())
-  );
-  filtro.forEach((elemento) => añadirCard(elemento));
+//checks dinamicos
+function printChecks() {
+  let cheksLocation = "";
+  categorysCheck.forEach((category) => {
+    cheksLocation += `<label><input type="checkbox" value="${category}">${category}</label>`;
+  });
+  checkStorer.innerHTML = cheksLocation;
+}
+printChecks();
+
+let checkboxBranded = [];
+let textSearch = "";
+let checkbox = document.querySelectorAll("input[type=checkbox]");
+checkbox.forEach((check) =>
+  check.addEventListener("click", (event) => {
+    let checked = event.target.checked;
+    if (checked) {
+      checkboxBranded.push(event.target.value);
+      crossfilter();
+    } else {
+      checkboxBranded = checkboxBranded.filter(
+        (uncheck) => uncheck !== event.target.value
+      );
+      crossfilter();
+    }
+  })
+);
+
+//defino la barra de busqueda
+let search = document.getElementById("searchInput");
+search.addEventListener("input", (events) => {
+  textSearch = events.target.value;
+  crossfilter();
 });
 
-//creo los checkbox dinamicos
-function dinamicCheckbox() {
-  let checkboxes = document.getElementById("check");
-  let allEvents = data.events.map((eventos) => eventos.category);
-  const dataArray = new Set(allEvents);
-  let category = [...dataArray];
-  let inputCheckbox = "";
-  category.forEach((category) => {
-    inputCheckbox += `<label><input type="checkbox" value="${category}">${category}</label>`;
-  });
-  checkboxes.innerHTML = inputCheckbox;
-  let id = 1;
-  data.events.map((eventos) => (eventos.id = id++));
-}
-dinamicCheckbox();
-
-//filtro check
-let checkb = [];
-check.addEventListener("change", (event) => {
-  contenedor.innerHTML = "";
-  if (event.target.checked) {
-    checkb = checkb.concat(
-      data.events.filter((element) =>
-        element.category
-          .toLowerCase()
-          .includes(event.target.value.toLowerCase())
+//filtro cruzado
+function crossfilter() {
+  let info = [];
+  if (checkboxBranded.length > 0 && textSearch !== "") {
+    checkboxBranded.map((selected) => {
+      info.push(
+        ...pastEvents.filter(
+          (events) =>
+            events.name
+              .toLocaleLowerCase()
+              .includes(textSearch.trim().toLocaleLowerCase()) &&
+            events.category.includes(selected)
+        )
+      );
+    });
+  } else if (checkboxBranded.length > 0 && textSearch === "") {
+    checkboxBranded.map((selected) => {
+      info.push(
+        ...pastEvents.filter((events) => events.category.includes(selected))
+      );
+    });
+  } else if (checkboxBranded.length == 0 && textSearch !== "") {
+    info.push(
+      ...pastEvents.filter((events) =>
+        events.name
+          .toLocaleLowerCase()
+          .includes(textSearch.trim().toLocaleLowerCase())
       )
     );
-
-    checkb.forEach((event) => añadirCard(event));
+  } else {
+    info.push(...pastEvents);
   }
-});
+  printCard(info);
+}
+crossfilter();
