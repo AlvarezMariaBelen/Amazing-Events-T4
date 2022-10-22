@@ -1,63 +1,104 @@
-let contenedor = document.getElementById("container");
-let buscar = document.getElementById("searchInput");
+let dataEvents = data.events;
+let cardStorer = document.getElementById("container");
+let checkStorer = document.getElementById("check");
+let checks = dataEvents.map((event) => event.category);
+let filterrepeat = new Set(checks);
+let categorysCheck = [...filterrepeat];
 
 //creo las cards dinamicas
-function añadirCard(array) {
-  //innerHTML devuelve o establece la sintaxis HTML describiendo los descendientes del elemento
-  contenedor.innerHTML += ` 
+function printCard(array) {
+  let locationCards = " ";
+  if (array.length !== 0) {
+    array.forEach((data) => {
+      locationCards += ` 
        <div class="cards">
-            <img src="${array.image}" />
-            <h2>${array.name}</h2>
-            <p>${array.description}</p>
-            <p class="price">Price: ${array.price}</p>
-            <a href="details.html?id=${array._id}"><button>More details</button></a>
+            <img src="${data.image}" />
+            <h2>${data.name}</h2>
+            <p>${data.description}</p>
+            <p class="price">Price: ${data.price}</p>
+            <a href="details.html?id=${data._id}"><button>More details</button></a>
         </div>
         `;
+      cardStorer.innerHTML = locationCards;
+    });
+  } else {
+    cardStorer.innerHTML = `
+    <div>
+      <p class="card-text">No results found!</p>
+    </div>
+  `;
+  }
 }
-data.events.forEach((elemento) => añadirCard(elemento)); //foreach pasa por todos los elementos de un array
+printCard(dataEvents);
 
-//filtro el buscador
-buscar.addEventListener("input", (event) => {
-  contenedor.innerHTML = "";
-  let filtro = data.events.filter(
-    //filter recorre un array mediante una funcion y retorna un array filtrado con los elementos que pasan por el condicional
-    (elemento) =>
-      elemento.name.toLowerCase().includes(event.target.value.toLowerCase()) //target devuelve el objeto al que se envía el evento
-  );
-  filtro.forEach((elemento) => añadirCard(elemento));
+//checks dinamicos
+function printChecks() {
+  let cheksLocation = "";
+  categorysCheck.forEach((category) => {
+    cheksLocation += `<label><input type="checkbox" value="${category}">${category}</label>`;
+  });
+  checkStorer.innerHTML = cheksLocation;
+}
+printChecks();
+
+
+let checkboxBranded = [];
+let textSearch = "";
+let checkbox = document.querySelectorAll("input[type=checkbox]");
+checkbox.forEach((check) =>
+  check.addEventListener("click", (event) => {
+    let checked = event.target.checked;
+    if (checked) {
+      checkboxBranded.push(event.target.value);
+      crossfilter();
+    } else {
+      checkboxBranded = checkboxBranded.filter(
+        (uncheck) => uncheck !== event.target.value
+      );
+      crossfilter();
+    }
+  })
+);
+
+//defino la barra de busqueda
+let search = document.getElementById("searchInput");
+search.addEventListener("input", (events) => {
+  textSearch = events.target.value;
+  crossfilter();
 });
 
-//creo los checkbox dinamicos
-function dinamicCheckbox() {
-  let checkboxes = document.getElementById("check");
-  let allEvents = data.events.map((eventos) => eventos.category); //map transformación en los elementos del array para tener una nueva lista con la misma cantidad de elementos que la lista base
-  const dataArray = new Set(allEvents); //nueva coleccion de valores
-  let category = [...dataArray];
-  let inputCheckbox = "";
-  category.forEach((category) => {
-    inputCheckbox += `<label><input type="checkbox" value="${category}">${category}</label>`;
-  });
-  checkboxes.innerHTML = inputCheckbox;
-  let id = 1;
-  data.events.map((eventos) => (eventos.id = id++));
-}
-dinamicCheckbox();
-
-//filtro check
-let checkb = [];
-check.addEventListener("change", (event) => {
-  //addEventListener es un escuchador que indica al navegador que este atento a la interaccion del usuario
-  contenedor.innerHTML = "";
-  if (event.target.checked) {
-    checkb = checkb.concat(
-      //concat concatena dos array sin modificar ninguno existente
-      data.events.filter((element) =>
-        element.category
-          .toLowerCase()
-          .includes(event.target.value.toLowerCase())
+//filtro cruzado
+function crossfilter() {
+  let info = [];
+  if (checkboxBranded.length > 0 && textSearch !== "") {
+    checkboxBranded.map((selected) => {
+      info.push(
+        ...dataEvents.filter(
+          (events) =>
+            events.name
+              .toLocaleLowerCase()
+              .includes(textSearch.trim().toLocaleLowerCase()) &&
+            events.category.includes(selected)
+        )
+      );
+    });
+  } else if (checkboxBranded.length > 0 && textSearch === "") {
+    checkboxBranded.map((selected) => {
+      info.push(
+        ...dataEvents.filter((events) => events.category.includes(selected))
+      );
+    });
+  } else if (checkboxBranded.length == 0 && textSearch !== "") {
+    info.push(
+      ...dataEvents.filter((events) =>
+        events.name
+          .toLocaleLowerCase()
+          .includes(textSearch.trim().toLocaleLowerCase())
       )
     );
-
-    checkb.forEach((event) => añadirCard(event));
+  } else {
+    info.push(...dataEvents);
   }
-});
+  printCard(info);
+}
+crossfilter();
