@@ -81,7 +81,7 @@ nav a:hover {
 }
 .cards {
     width: 200px;
-    height: 320px;
+    height: 350px;
     background-color: rgb(225, 191, 246);
     border-radius: 9px;
     border-style: solid;
@@ -98,13 +98,19 @@ nav a:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding-top: 38px;
 }
 .upcard {
     display: flex;
     flex-direction: column;
     height: 150px;
-    padding-top: 5px;
 }
+h2 {
+    text-align: center;
+    padding-bottom: 12px;
+    padding-top: 4px;
+}
+
 img {
     width: 194px;
     height: 130px;
