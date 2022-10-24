@@ -1,6 +1,6 @@
 let eventss;
 
-fetch("https://amazing-events.herokuapp.com/api/events")
+fetch("https://mind-hub.up.railway.app/amazing")
   .then((data) => data.json())
   .then((data) => {
     eventss = data.events;
@@ -30,7 +30,7 @@ function printCard(array) {
        </div> 
        <div class="lowcard">
           <p class="price">Price: ${data.price}</p>
-          <a href="details.html?id=${data._id}"><button>More details</button></a>
+          <a href="details.html?id=${data.id}"><button>More details</button></a>
        </div>   
       </div>
       `;
