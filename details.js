@@ -1,27 +1,31 @@
-let contenedorDet = document.getElementById("detail");
-let dataEvents = data.events;
+let conteinerDet = document.getElementById("detail");
 
-const id = location.search;
-const parametro = new URLSearchParams(id); //url search params sirve para recuperar parametros de busqueda, id es la query string
-const numberId = parseInt(parametro.get("id")); //parseInt convierte un string y devuelve un entero
-
-const evento = dataEvents.find((spot) => spot._id === numberId);
-
-contenedorDet.innerHTML = `
+function printDetails(e) {
+  conteinerDet.innerHTML = `
   <div class="detailcard" id="detail">
   <img
      class="image_card"
-     src="${evento.image}"
-     alt="collectivities"/>
+     src="${e.image}"
+     alt="${e.image}"/>
    <div class="description">
-     <h3>${evento.name}</h3>
-     <p>Date: ${evento.date}</p>
-     <p>Descripton: ${evento.description}</p>
-     <p>Category: ${evento.category}</p>
-     <p>Place: ${evento.place}</p>
-     <p>Capacity: ${evento.capacity}</p>
-     <p>Assistance: ${evento.assistance}</p>
-     <p>Price: ${evento.price}</p>
+     <h3>${e.name}</h3>
+     <p>Date: ${e.date}</p>
+     <p>Descripton: ${e.description}</p>
+     <p>Category: ${e.category}</p>
+     <p>Place: ${e.place}</p>
+     <p>Capacity: ${e.capacity}</p>
+     <p>Assistance: ${e.assistance}</p>
+     <p>Price: ${e.price}</p>
    </div>
  </div>
  `;
+}
+
+async function gettingTheId() {
+  let id = location.search.slice(4); //id
+  let response = await fetch(`https://mind-hub.up.railway.app/amazing/${id}`);
+  let responseApi = await response.json(); //evento y los datos
+  let event = responseApi.event; //id y los datos
+  printDetails(event);
+}
+gettingTheId();
