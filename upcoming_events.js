@@ -1,12 +1,11 @@
 let eventss;
-let dates;
 let upcoming;
-fetch("https://amazing-events.herokuapp.com/api/events")
+fetch("https://mind-hub.up.railway.app/amazing")
   .then((data) => data.json())
   .then((data) => {
-    dates = data.currentDate;
+    currentDate = data.date;
     eventss = data.events;
-    upcoming = eventss.filter((event) => event.date > dates);
+    upcoming = eventss.filter((event) => event.date > currentDate);
     printChecks(upcoming, checkStorer);
     printCard(upcoming, cardStorer);
     search.addEventListener("input", crossfilter);
@@ -32,7 +31,7 @@ function printCard(array) {
        </div> 
        <div class="lowcard">
           <p class="price">Price: ${data.price}</p>
-          <a href="details.html?id=${data._id}"><button>More details</button></a>
+          <a href="details.html?id=${data.id}"><button>More details</button></a>
        </div>   
       </div>
       `;
