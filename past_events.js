@@ -1,9 +1,22 @@
-const pastEvents = data.events.filter((event) => event.date < data.currentDate);
-let cardStorer = document.getElementById("container");
+let eventss;
+let dates;
+let past;
+fetch("https://amazing-events.herokuapp.com/api/events")
+  .then((data) => data.json())
+  .then((data) => {
+    dates = data.currentDate;
+    eventss = data.events;
+    past = eventss.filter((event) => event.date < dates);
+    printChecks(past, checkStorer);
+    printCard(past, cardStorer);
+    search.addEventListener("input", crossfilter);
+    checkStorer.addEventListener("click", crossfilter);
+  })
+  .catch(console.log("The request cannot be displayed."));
+
 let checkStorer = document.getElementById("check");
-let checks = pastEvents.map((event) => event.category);
-let filterrepeat = new Set(checks);
-let categorysCheck = [...filterrepeat];
+let cardStorer = document.getElementById("container");
+let search = document.getElementById("searchInput");
 
 //creo las cards dinamicas
 function printCard(array) {
@@ -11,97 +24,49 @@ function printCard(array) {
   if (array.length !== 0) {
     array.forEach((data) => {
       locationCards += ` 
-      <div class="cards">
-      <img src="${data.image}" />
-   <div class="upcard">  
-      <h2>${data.name}</h2>
-      <p>${data.description}</p>
-   </div> 
-   <div class="lowcard">
-      <p class="price">Price: ${data.price}</p>
-      <a href="details.html?id=${data._id}"><button>More details</button></a>
-   </div>   
-  </div>
-          `;
+     <div class="cards">
+          <img src="${data.image}" />
+       <div class="upcard">  
+          <h2>${data.name}</h2>
+          <p>${data.description}</p>
+       </div> 
+       <div class="lowcard">
+          <p class="price">Price: ${data.price}</p>
+          <a href="details.html?id=${data._id}"><button>More details</button></a>
+       </div>   
+      </div>
+      `;
       cardStorer.innerHTML = locationCards;
     });
   } else {
     cardStorer.innerHTML = `
-      <div>
-        <p class="card-text">No results found!</p>
-      </div>
-    `;
+  <div>
+    <p class="card-text">No results found!</p>
+  </div>
+`;
   }
 }
-printCard(pastEvents);
 
 //checks dinamicos
-function printChecks() {
-  let cheksLocation = "";
-  categorysCheck.forEach((category) => {
-    cheksLocation += `<label><input type="checkbox" value="${category}">${category}</label>`;
+function printChecks(events, storer) {
+  let cs = (events) => events.category;
+  let categories = new Set(events.filter(cs).map(cs));
+  categories.forEach((category) => {
+    storer.innerHTML += `
+    <label><input type="checkbox" value="${category}">${category}</label>
+    `;
   });
-  checkStorer.innerHTML = cheksLocation;
 }
-printChecks();
 
-let checkboxBranded = [];
-let textSearch = "";
-let checkbox = document.querySelectorAll("input[type=checkbox]");
-checkbox.forEach((check) =>
-  check.addEventListener("click", (event) => {
-    let checked = event.target.checked;
-    if (checked) {
-      checkboxBranded.push(event.target.value);
-      crossfilter();
-    } else {
-      checkboxBranded = checkboxBranded.filter(
-        (uncheck) => uncheck !== event.target.value
-      );
-      crossfilter();
-    }
-  })
-);
-
-//defino la barra de busqueda
-let search = document.getElementById("searchInput");
-search.addEventListener("input", (events) => {
-  textSearch = events.target.value;
-  crossfilter();
-});
-
-//filtro cruzado
 function crossfilter() {
-  let info = [];
-  if (checkboxBranded.length > 0 && textSearch !== "") {
-    checkboxBranded.map((selected) => {
-      info.push(
-        ...pastEvents.filter(
-          (events) =>
-            events.name
-              .toLocaleLowerCase()
-              .includes(textSearch.trim().toLocaleLowerCase()) &&
-            events.category.includes(selected)
-        )
-      );
-    });
-  } else if (checkboxBranded.length > 0 && textSearch === "") {
-    checkboxBranded.map((selected) => {
-      info.push(
-        ...pastEvents.filter((events) => events.category.includes(selected))
-      );
-    });
-  } else if (checkboxBranded.length == 0 && textSearch !== "") {
-    info.push(
-      ...pastEvents.filter((events) =>
-        events.name
-          .toLocaleLowerCase()
-          .includes(textSearch.trim().toLocaleLowerCase())
-      )
-    );
-  } else {
-    info.push(...pastEvents);
-  }
-  printCard(info);
+  let checked = [
+    ...document.querySelectorAll('input[type="checkbox"]:checked'),
+  ].map((element) => element.value);
+  let filterCategory = past.filter(
+    (eventss) => checked.includes(eventss.category) || checked.length == 0
+  );
+  let filterSearch = filterCategory.filter((value) =>
+    value.name.toLowerCase().includes(search.value.toLowerCase())
+  );
+  printCard(filterSearch, cardStorer);
 }
-crossfilter();
