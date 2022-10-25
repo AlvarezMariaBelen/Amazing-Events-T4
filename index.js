@@ -1,5 +1,4 @@
 let eventss;
-
 fetch("https://mh-amazing.herokuapp.com/amazing")
   .then((data) => data.json())
   .then((data) => {
