@@ -1,6 +1,6 @@
 let eventss;
 let past;
-fetch("https://mind-hub.up.railway.app/amazing")
+fetch("https://mh-amazing.herokuapp.com/amazing")
   .then((data) => data.json())
   .then((data) => {
     currentDate = data.date;
