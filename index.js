@@ -46,8 +46,8 @@ function printCard(array) {
 
 //checks dinamicos
 function printChecks(events, storer) {
-  let cs = (events) => events.category;
-  let categories = new Set(events.filter(cs).map(cs));
+  let chs = (events) => events.category;
+  let categories = new Set(events.filter(chs).map(chs));
   categories.forEach((category) => {
     storer.innerHTML += `
     <label><input type="checkbox" value="${category}">${category}</label>
