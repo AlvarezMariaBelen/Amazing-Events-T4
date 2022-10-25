@@ -67,7 +67,7 @@ nav a:hover {
     justify-content: space-around;
     padding-bottom: 20px;
     padding-top: 25px;
-    width: 1000px;
+    width: 500px;
 }
 
 /*main*/
@@ -175,12 +175,9 @@ form p {
 }
 
 /*stats*/
-table {
+#tables {
     display: flex;
-    justify-content: center;
-    padding-top: 50px;
-    empty-cells: show;
-    border-collapse: collapse;
+    flex-direction: column;
 }
 
 tr,
@@ -224,11 +221,6 @@ th {
 
 /*responsive*/
 @media screen and (max-width: 1075px) {
-    .buscador {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-    }
     label {
         padding-right: 2px;
         padding-left: 25px;
@@ -247,6 +239,9 @@ th {
 }
 
 @media screen and (max-width: 770px) {
+    #searchInput {
+        margin-top: 25px;
+    }
     .buscador {
         display: flex;
         flex-direction: row;
@@ -320,6 +315,15 @@ th {
 }
 
 @media screen and (max-width: 460px) {
+    #check {
+        font-size: smaller;
+        justify-content: left;
+    }
+    #searchInput {
+        float: none;
+        display: flex;
+        
+    }
     .detailsmain {
         padding-top: 150px;
     }
