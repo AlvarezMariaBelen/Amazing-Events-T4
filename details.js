@@ -23,7 +23,7 @@ function printDetails(e) {
 
 async function gettingTheId() {
   let id = location.search.slice(4); //id
-  let response = await fetch(`https://mind-hub.up.railway.app/amazing/${id}`);
+  let response = await fetch(`https://mh-amazing.herokuapp.com/amazing/${id}`);
   let responseApi = await response.json(); //evento y los datos
   let event = responseApi.event; //id y los datos
   printDetails(event);
