@@ -15,7 +15,7 @@ fetch("https://mh-amazing.herokuapp.com/amazing")
     stats(upcoming, "estimate", secondTable);
     stats(past, "assistance", thirdTable);
   })
-  .catch((error) => console.log(error));
+  .catch(console.log("The request cannot be displayed."));
 
 function tableOne() {
   past.map((object) => {
@@ -24,10 +24,14 @@ function tableOne() {
   let orderlyAssistance = [...past].sort(
     (e1, e2) => e1.attendancePercentage - e2.attendancePercentage
   );
+  console.log(orderlyAssistance);
   let orderlyCapacity = [...past].sort((e1, e2) => e1.capacity - e2.capacity);
-  let lowerAssistance = orderlyAssistance[0];
-  let highestAttendance = orderlyAssistance[orderlyAssistance.length - 1];
+  console.log(orderlyCapacity);
+  let highestAttendance = orderlyAssistance[0];
+  console.log(highestAttendance);
+  let lowerAssistance = orderlyAssistance[orderlyAssistance.length - 1];
   let highestCapacity = orderlyCapacity[orderlyCapacity.length - 1];
+  console.log(highestCapacity);
   printFirstTable(
     firstTable,
     lowerAssistance,
@@ -39,7 +43,7 @@ function tableOne() {
 function stats(dates, property, conteiner) {
   dates.map((event) => {
     event.gain = event[property] * event.price;
-    event.percent = ((100 * event[property]) / event.capacity).toFixed(1);
+    event.percent = (100 * event[property]) / event.capacity;
   });
   let categories = Array.from(new Set(dates.map((event) => event.category)));
   let stats = categories.map((cat) => {
@@ -49,27 +53,27 @@ function stats(dates, property, conteiner) {
   printSecondTable(stats, conteiner);
 }
 
-function statsReduce(array, prop) {
+function statsReduce(array, property) {
   let initialStat = {
     category: "",
     gain: 0,
     capacity: 0,
-    [prop]: 0,
+    [property]: 0,
   };
   let stats = array.reduce((element1, element2) => {
     return {
-      category: element2.category,
       gain: element1.gain + element2.gain,
+      category: element2.category,
       capacity: element1.capacity + element2.capacity,
-      [prop]: element1[prop] + element2[prop],
+      [property]: element1[property] + element2[property],
     };
   }, initialStat);
-  stats.prom = ((100 * stats[prop]) / stats.capacity).toFixed(1);
+  stats.prom = (100 * stats[property]) / stats.capacity;
   return stats;
 }
 
-function printFirstTable(contenedor, o1, o2, o3) {
-  contenedor.innerHTML += `
+function printFirstTable(container, o1, o2, o3) {
+  container.innerHTML += `
   <tr>
     <td>${o1.name}</td> 
     <td>${o2.name}</td>
@@ -78,9 +82,9 @@ function printFirstTable(contenedor, o1, o2, o3) {
 `;
 }
 
-function printSecondTable(array, contenedor) {
+function printSecondTable(array, container) {
   array.forEach((e) => {
-    contenedor.innerHTML += `
+    container.innerHTML += `
       <tr >
           <td >${e.category}</td>
           <td >${e.gain}</td>
