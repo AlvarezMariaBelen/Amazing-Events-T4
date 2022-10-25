@@ -14,7 +14,7 @@ function printDetails(e) {
      <p>Category: ${e.category}</p>
      <p>Place: ${e.place}</p>
      <p>Capacity: ${e.capacity}</p>
-     <p>Assistance: ${e.assistance}</p>
+     <p>Assistance: ${e.assistance || e.estimate}</p>
      <p>Price: ${e.price}</p>
    </div>
  </div>
