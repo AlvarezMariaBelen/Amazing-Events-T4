@@ -1,0 +1,358 @@
+* {
+    box-sizing: border-box;
+    margin: 0%;
+    padding: 0%;
+}
+body {
+    background-image: url(Imagenes/pink1.jpg);
+}
+
+/*header*/
+header {
+    height: 200px;
+}
+
+.logo_nav {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.logo {
+    width: 150px;
+    height: 35px;
+    margin-left: 10px;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 50px;
+    height: 100px;
+    padding-top: 15px;
+    background-image: url(Imagenes/pink4.jpg);
+    color: azure;
+    text-shadow: 0 0 9px rgb(227, 163, 224);
+}
+
+nav {
+    padding-right: 40px;
+}
+
+nav a {
+    margin-left: 70px;
+    background-color: blueviolet;
+    font-size: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    color: azure;
+    filter: drop-shadow(0 2px 5px rgba(179, 53, 152, 0.7));
+}
+nav a:hover {
+    background-color: rgb(219, 193, 244);
+    color: rgb(93, 18, 164);
+}
+
+/*buscador*/
+#searchInput {
+    float: right;
+    height: 25px;
+    margin-right: 15px;
+}
+#check {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-bottom: 20px;
+    padding-top: 25px;
+    width: 500px;
+}
+
+/*main*/
+
+#container {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.cards {
+    width: 200px;
+    height: 350px;
+    background-color: rgb(225, 191, 246);
+    border-radius: 9px;
+    border-style: solid;
+    border-color: blueviolet;
+    margin: 5px;
+}
+.cards>p {
+     padding-top: 8px;
+}
+.price {
+    font-weight: bold;
+}
+.lowcard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 38px;
+}
+.upcard {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+}
+h2 {
+    text-align: center;
+    padding-bottom: 12px;
+    padding-top: 4px;
+}
+
+img {
+    width: 194px;
+    height: 130px;
+}
+
+button {
+    border-style: none;
+    height: 18px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: blueviolet;
+    color: azure;
+    filter: drop-shadow(0 2px 3px rgba(123, 36, 125, 0.7));
+    float: right;
+}
+button:hover {
+    background-color: rgb(219, 193, 244);
+    color: rgb(93, 18, 164);
+}
+
+/*footer*/
+.redes {
+    width: 40px;
+    height: 40px;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 100px;
+}
+footer p {
+    font-size: 30px;
+    padding-right: 20px;
+}
+.iconos_redes {
+    padding-left: 20px;
+}
+
+/*contact*/
+.formu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    padding-top: 50px;
+}
+
+form p {
+    font-size: x-large;
+}
+
+.text-input {
+    width: 400px;
+    height: 30px;
+}
+.submit {
+    width: 70px;
+    height: 30px;
+}
+
+/*stats*/
+#tables {
+    display: flex;
+    flex-direction: column;
+}
+
+tr,
+td {
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+
+td {
+    height: 30px;
+}
+
+th {
+    float: left;
+}
+/*details*/
+.detailsmain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+}
+.detailcard {
+    width: 600px;
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+    border-style: dotted;
+    border-width: 1px;
+    border-color: rgb(176, 111, 169);
+    align-items: center;
+    border-radius: 59px;
+    filter: drop-shadow(0 2px 3px rgba(123, 36, 125, 0.7));
+}
+.description {
+    display: flex;
+    flex-direction: column;
+    padding-left:20px;
+}
+
+/*responsive*/
+@media screen and (max-width: 1075px) {
+    label {
+        padding-right: 2px;
+        padding-left: 25px;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    nav {
+        padding-right: 10px;
+    }
+    nav a {
+        margin-left: 10px;
+        font-size: 20px;
+        text-decoration: none;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    #searchInput {
+        margin-top: 25px;
+    }
+    .buscador {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    label {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+    header {
+        height: 200px;
+    }
+    .logo_nav {
+        display: flex;
+        flex-direction: column;
+        height: 100px;
+        padding-bottom: 15px;
+
+    }
+    .logo {
+        width: 150px;
+        height: 35px;
+        margin-left: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .buscador {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    input {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .logo_nav {
+        display: flex;
+        flex-direction: column;
+        height: 200px;
+        align-items: center;
+        padding-top: 10px;
+    }
+    .logo {
+        margin-left: 0px;
+    }
+    nav {
+        display: flex;
+        flex-direction: column;
+        padding-right: none;
+
+    }
+    nav a {
+        margin-left: 0px;
+        font-size: 20px;
+        text-decoration: none;
+        text-align: center;
+        width: 200px;
+    }
+    .buscador {
+        padding-top: 100px;
+    }
+    table {
+        padding-top: 150px;
+    }
+    .formu {
+        padding-top: 100px;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    #check {
+        font-size: smaller;
+        justify-content: left;
+    }
+    #searchInput {
+        float: none;
+        display: flex;
+        
+    }
+    .detailsmain {
+        padding-top: 150px;
+    }
+    .detailcard {
+        width: 350px;
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .detailcard {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }
+    .description {
+        padding-left: none;
+        padding-top: 50px;
+    }
+    .image_card {
+        padding-top: 20px;
+    }
+    h1 {
+        font-size: 40px;
+    }
+    .text-input {
+        width: 300px;
+    }
+    textarea {
+        width: 300px;
+    }
+}
